@@ -1,6 +1,10 @@
 package com.xfeng.javafeng;
 
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.zip.CRC32;
 
 public class MyClass {
@@ -29,15 +33,34 @@ public class MyClass {
         crc32.update("腾讯手机管家".getBytes());
         long value = crc32.getValue();
         System.out.println("");
-        System.out.println("crc32:"+value);
+        System.out.println("crc32:" + value);
 
 
         KugouCRC32 kugouCRC32 = new KugouCRC32();
         byte[] bytes = "腾讯手机管家".getBytes();
-        kugouCRC32.crc(bytes,0,bytes.length);
+        kugouCRC32.crc(bytes, 0, bytes.length);
         long kugouCRC32value = kugouCRC32.getValue();
         System.out.println("");
-        System.out.println("kugoucrc32:"+kugouCRC32value);
+        System.out.println("kugoucrc32:" + kugouCRC32value);
+
+
+        String 腾讯手机管家 = getMD5Str("腾讯手机管家");
+        System.out.println("md5:" + 腾讯手机管家);
+
+    }
+
+    public static String getMD5Str(String str) {
+        byte[] digest = null;
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("md5");
+            digest = md5.digest(str.getBytes("utf-8"));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String md5Str = new BigInteger(1, digest).toString(16);
+        return md5Str;
     }
 
     private static void quickSort(int[] arr, int l, int r) {
