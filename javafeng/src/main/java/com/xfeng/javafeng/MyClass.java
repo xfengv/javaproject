@@ -1,6 +1,8 @@
 package com.xfeng.javafeng;
 
 
+import java.util.zip.CRC32;
+
 public class MyClass {
     public static void main(String[] args) {
         System.out.println("hello world");
@@ -22,6 +24,20 @@ public class MyClass {
         System.out.println("source end");
         printArr(arr);
 
+
+        CRC32 crc32 = new CRC32();
+        crc32.update("腾讯手机管家".getBytes());
+        long value = crc32.getValue();
+        System.out.println("");
+        System.out.println("crc32:"+value);
+
+
+        KugouCRC32 kugouCRC32 = new KugouCRC32();
+        byte[] bytes = "腾讯手机管家".getBytes();
+        kugouCRC32.crc(bytes,0,bytes.length);
+        long kugouCRC32value = kugouCRC32.getValue();
+        System.out.println("");
+        System.out.println("kugoucrc32:"+kugouCRC32value);
     }
 
     private static void quickSort(int[] arr, int l, int r) {
@@ -43,17 +59,17 @@ public class MyClass {
                 left++;
                 swap(arr, l, left);
                 l++;
-            }else if(arr[l] > arr[r]){
+            } else if (arr[l] > arr[r]) {
                 right--;
                 swap(arr, l, right);
-            }else {
+            } else {
                 l++;
             }
         }
-        swap(arr,right,r);
+        swap(arr, right, r);
         int[] position = new int[2];
-        position[0]=left+1;
-        position[1]=right;
+        position[0] = left + 1;
+        position[1] = right;
         return position;
     }
 
